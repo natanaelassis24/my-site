@@ -1,13 +1,21 @@
-// /components/Testimonials.jsx
+// /components/Testimonials.tsx
 "use client";
-
 import { useEffect, useState } from "react";
 import { db } from "../firebase"; // seu firebase.js
 import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
 import Image from "next/image";
 
+// Define o tipo do depoimento
+type Testimonial = {
+  id: string;
+  name: string;
+  message: string;
+  image: string | null;
+};
+
 export default function Testimonials() {
-  const [testimonials, setTestimonials] = useState([]);
+  // Tipa explicitamente o estado
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
 
   useEffect(() => {
     if (!db) return;
@@ -15,8 +23,8 @@ export default function Testimonials() {
     const q = query(collection(db, "testimonials"), orderBy("createdAt", "desc"));
 
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      const data = snapshot.docs.map((doc) => {
-        const docData = doc.data();
+      const data: Testimonial[] = snapshot.docs.map((doc) => {
+        const docData = doc.data() as any;
         return {
           id: doc.id,
           name: docData.name || "Cliente",
