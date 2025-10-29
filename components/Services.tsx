@@ -1,10 +1,10 @@
 import Image from "next/image";
 
 const services = [
-  { title: "Pintura Interna", img: "/images/hero.jpg" },
-  { title: "Pintura Externa", img: "/images/hero.jpg" },
-  { title: "Acabamento em Fibra de Cimento", img: "/images/hero.jpg" },
-  { title: "Revestimento Board and Batten", img: "/images/hero.jpg" },
+  { title: "Pintura Interna", img: "/images/banner0.png" },
+  { title: "Pintura Externa", img: "/images/banner1.png" },
+  { title: "Acabamento em Fibra de Cimento", img: "/images/banner2.png" },
+  { title: "Revestimento Board and Batten", img: "/images/banner3.png" },
 ];
 
 export default function Services() {
