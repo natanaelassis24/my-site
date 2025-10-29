@@ -10,8 +10,13 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR">
-      <body>
-        <Header /> {/* ← Esse Header já aparece em TODAS as páginas */}
+      <head>
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#ff0000" />
+        <link rel="icon" href="/favicon.ico" />
+      </head>
+      <body className="bg-gray-50 text-gray-900">
+        <Header /> {/* Aparece em todas as páginas */}
         <main className="min-h-screen">{children}</main>
       </body>
     </html>
