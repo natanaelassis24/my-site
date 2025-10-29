@@ -1,6 +1,9 @@
 import { FaFacebookF, FaInstagram, FaWhatsapp, FaEnvelope } from "react-icons/fa";
 
 export default function Footer() {
+  const whatsappNumber = "5512992164758"; // Coloque seu número com DDI + DDD
+  const whatsappMessage = encodeURIComponent("Olá! Gostaria de pedir um orçamento.");
+
   return (
     <footer className="bg-gray-100 mt-12">
       <div className="max-w-6xl mx-auto px-4 py-12">
@@ -27,7 +30,7 @@ export default function Footer() {
           </a>
 
           <a
-            href="https://wa.me/5599999999999"
+            href={`https://wa.me/${whatsappNumber}?text=${whatsappMessage}`}
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-green-600 transition-colors"

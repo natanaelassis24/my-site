@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function About() {
   return (
@@ -12,7 +13,11 @@ export default function About() {
         <p className="text-gray-600 mt-4">
           Serviço de pintura profissional garantindo qualidade e acabamento impecável. Nossa equipe está pronta para transformar seu ambiente com dedicação e atenção aos detalhes.
         </p>
-        <button className="mt-6 px-5 py-3 bg-brandRed text-white rounded-full">Leia Mais</button>
+        <Link href="/sobre">
+          <button className="mt-6 px-5 py-3 bg-brandRed text-white rounded-full">
+            Leia Mais
+          </button>
+        </Link>
       </div>
     </section>
   );

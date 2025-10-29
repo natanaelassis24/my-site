@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link"; // ✅ Import necessário para navegação interna
 
 export default function Hero() {
   return (
@@ -25,9 +26,11 @@ export default function Hero() {
           <p className="mt-6 text-gray-600">
             Serviços profissionais de pintura para interiores e exteriores, com materiais de alta qualidade.
           </p>
-          <button className="mt-8 px-6 py-3 bg-red-600 text-white rounded-full shadow hover:bg-red-700 transition-colors">
-            Saiba Mais
-          </button>
+          <Link href="/servicos">
+            <button className="mt-8 px-6 py-3 bg-red-600 text-white rounded-full shadow hover:bg-red-700 transition-colors">
+              Saiba Mais
+            </button>
+          </Link>
         </div>
       </div>
 
