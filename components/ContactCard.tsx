@@ -1,36 +1,30 @@
 "use client";
-
 import { useState } from "react";
 
 export default function ContactCard() {
-  // Guarda os dados digitados no formulário
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [loading, setLoading] = useState(false);
 
-  // Atualiza os campos conforme o usuário digita
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Quando clicar em "Enviar"
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      // Envia os dados para a rota /api/send-email
-      await fetch("/api/send-email", {
+      const res = await fetch("/api/send-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
+
+      const result = await res.json();
+
+      if (!result.success) {
+        throw new Error(result.error || "Erro desconhecido");
+      }
 
       // Envia também para o WhatsApp
       const text = `Olá! Nova mensagem do site:%0A%0A👤 Nome: ${formData.name}%0A✉️ E-mail: ${formData.email}%0A💬 Mensagem: ${formData.message}`;
@@ -49,7 +43,6 @@ export default function ContactCard() {
 
   return (
     <section className="py-12 flex flex-col md:flex-row justify-between gap-8 items-start">
-      {/* Texto lateral */}
       <div className="w-full md:w-1/2">
         <h4 className="text-sm text-gray-400 uppercase">Fique à vontade para</h4>
         <h3 className="text-2xl font-bold mt-1">Nos contatar</h3>
@@ -60,7 +53,6 @@ export default function ContactCard() {
         </p>
       </div>
 
-      {/* Formulário */}
       <div className="w-full md:w-1/2">
         <div className="bg-white rounded-2xl p-6 shadow-lg">
           <h4 className="text-lg font-semibold">Entre em contato</h4>
