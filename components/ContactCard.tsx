@@ -9,36 +9,18 @@ export default function ContactCard() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
-    try {
-      const res = await fetch("/api/send-email", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+    // Envia direto para o WhatsApp
+    const text = `Olá! Nova mensagem do site:%0A%0A👤 Nome: ${formData.name}%0A✉️ E-mail: ${formData.email}%0A💬 Mensagem: ${formData.message}`;
+    const whatsappNumber = "5512992164758"; // número com DDI e DDD
+    window.open(`https://wa.me/${whatsappNumber}?text=${text}`, "_blank");
 
-      const result = await res.json();
-
-      if (!result.success) {
-        throw new Error(result.error || "Erro desconhecido");
-      }
-
-      // Envia também para o WhatsApp
-      const text = `Olá! Nova mensagem do site:%0A%0A👤 Nome: ${formData.name}%0A✉️ E-mail: ${formData.email}%0A💬 Mensagem: ${formData.message}`;
-      const whatsappNumber = "5512992164758"; // número com DDI e DDD
-      window.open(`https://wa.me/${whatsappNumber}?text=${text}`, "_blank");
-
-      alert("Mensagem enviada com sucesso!");
-      setFormData({ name: "", email: "", message: "" });
-    } catch (error) {
-      console.error(error);
-      alert("Ocorreu um erro ao enviar sua mensagem.");
-    } finally {
-      setLoading(false);
-    }
+    alert("Mensagem aberta no WhatsApp com sucesso!");
+    setFormData({ name: "", email: "", message: "" });
+    setLoading(false);
   };
 
   return (
@@ -89,7 +71,7 @@ export default function ContactCard() {
                 disabled={loading}
                 className="bg-red-600 text-white px-6 py-2 rounded-full hover:bg-red-700 disabled:opacity-60"
               >
-                {loading ? "Enviando..." : "Enviar"}
+                {loading ? "Abrindo WhatsApp..." : "Enviar"}
               </button>
             </div>
           </form>
