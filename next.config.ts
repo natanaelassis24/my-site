@@ -7,10 +7,9 @@ const withPWA = require('next-pwa')({
 
 const nextConfig = withPWA({
   images: {
-    domains: [],
+    domains: ["firebasestorage.googleapis.com"], // <- ADICIONE ESSE DOMÍNIO
   },
   reactStrictMode: true,
-  // Desabilita Turbopack
   experimental: {
     turbo: false,
   },
