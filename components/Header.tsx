@@ -1,3 +1,5 @@
+"use client"; // ✅ necessário para usar useState
+
 import Link from "next/link";
 import { useState } from "react";
 
