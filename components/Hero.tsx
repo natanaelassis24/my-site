@@ -6,17 +6,18 @@ export default function Hero() {
       <div className="max-w-6xl mx-auto px-4 py-16 flex flex-col md:flex-row items-center gap-8">
         
         {/* Banner / Imagem da esquerda */}
-        <div className="md:w-1/2 relative rounded-[48px] overflow-hidden shadow-lg h-80 md:h-96">
+        <div className="w-full md:w-1/2 relative rounded-[48px] overflow-hidden shadow-lg h-64 sm:h-72 md:h-80 lg:h-96">
           <Image
-            src="/images/banner.png" // Aqui é o banner
+            src="/images/banner.png" // Banner
             alt="Promoção Ricardo Pinturas"
             fill
             style={{ objectFit: "cover" }}
+            sizes="(max-width: 768px) 100vw, 50vw"
           />
         </div>
 
         {/* Texto */}
-        <div className="md:w-1/2">
+        <div className="md:w-1/2 mt-6 md:mt-0">
           <p className="text-sm text-gray-500 uppercase tracking-wider">Serviços de pintura</p>
           <h2 className="text-4xl md:text-5xl font-extrabold leading-tight mt-2">
             Ricardo Pinturas <br /> Profissionais de Qualidade
