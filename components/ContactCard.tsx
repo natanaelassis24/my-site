@@ -13,18 +13,17 @@ export default function ContactCard() {
     e.preventDefault();
     setLoading(true);
 
-    // Envia direto para o WhatsApp
     const text = `Olá! Nova mensagem do site:%0A%0A👤 Nome: ${formData.name}%0A✉️ E-mail: ${formData.email}%0A💬 Mensagem: ${formData.message}`;
     const whatsappNumber = "5512992164758"; // número com DDI e DDD
     window.open(`https://wa.me/${whatsappNumber}?text=${text}`, "_blank");
 
-    alert("Mensagem aberta no WhatsApp com sucesso!");
     setFormData({ name: "", email: "", message: "" });
     setLoading(false);
   };
 
   return (
-    <section className="py-12 flex flex-col md:flex-row justify-between gap-8 items-start">
+    <section className="py-12 flex flex-col md:flex-row justify-between gap-8 items-start max-w-6xl mx-auto px-4">
+      {/* Informações de contato */}
       <div className="w-full md:w-1/2">
         <h4 className="text-sm text-gray-400 uppercase">Fique à vontade para</h4>
         <h3 className="text-2xl font-bold mt-1">Nos contatar</h3>
@@ -35,6 +34,7 @@ export default function ContactCard() {
         </p>
       </div>
 
+      {/* Formulário */}
       <div className="w-full md:w-1/2">
         <div className="bg-white rounded-2xl p-6 shadow-lg">
           <h4 className="text-lg font-semibold">Entre em contato</h4>
@@ -63,15 +63,15 @@ export default function ContactCard() {
               onChange={handleChange}
               required
               placeholder="Sua mensagem"
-              className="w-full rounded-2xl border px-4 py-3 text-sm"
+              className="w-full rounded-2xl border px-4 py-3 text-sm min-h-[120px] md:min-h-[150px]"
             />
             <div className="text-right">
               <button
                 type="submit"
                 disabled={loading}
-                className="bg-red-600 text-white px-6 py-2 rounded-full hover:bg-red-700 disabled:opacity-60"
+                className="bg-red-600 text-white px-6 py-2 rounded-full hover:bg-red-700 disabled:opacity-60 transition-colors"
               >
-                {loading ? "Abrindo WhatsApp..." : "Enviar"}
+                {loading ? "Abrindo WhatsApp..." : "Enviar via WhatsApp"}
               </button>
             </div>
           </form>
