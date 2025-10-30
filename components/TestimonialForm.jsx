@@ -13,29 +13,34 @@ export default function TestimonialForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+
     let imageUrl = "";
 
     try {
+      // Faz upload da imagem se houver
       if (image) {
-        const imageRef = ref(storage, `testimonials/${image.name}`);
+        const imageRef = ref(storage, `depoimentos/${Date.now()}_${image.name}`);
         await uploadBytes(imageRef, image);
         imageUrl = await getDownloadURL(imageRef);
       }
 
-      await addDoc(collection(db, "testimonials"), {
+      // Envia dados para o Firestore
+      await addDoc(collection(db, "depoimentos"), {
         name,
         message,
         image: imageUrl,
         createdAt: Timestamp.now(),
       });
 
+      // Limpa o formulário
       setName("");
       setMessage("");
       setImage(null);
-      alert("Depoimento enviado com sucesso!");
+
+      alert("✅ Depoimento enviado com sucesso!");
     } catch (error) {
-      console.error(error);
-      alert("Erro ao enviar o depoimento. Tente novamente.");
+      console.error("Erro ao enviar depoimento:", error);
+      alert("❌ Erro ao enviar o depoimento. Tente novamente.");
     } finally {
       setLoading(false);
     }
@@ -46,7 +51,9 @@ export default function TestimonialForm() {
       <h3 className="text-center text-gray-500 uppercase tracking-wider text-sm">
         Deixe seu depoimento
       </h3>
-      <h2 className="text-3xl font-bold text-center text-gray-900 mt-2">Compartilhe sua experiência</h2>
+      <h2 className="text-3xl font-bold text-center text-gray-900 mt-2">
+        Compartilhe sua experiência
+      </h2>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-8">
         <input
@@ -57,6 +64,7 @@ export default function TestimonialForm() {
           required
           className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
+
         <textarea
           placeholder="Seu depoimento"
           value={message}
@@ -64,11 +72,14 @@ export default function TestimonialForm() {
           required
           className="border border-gray-300 rounded-lg p-3 h-32 resize-none focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
+
         <input
           type="file"
+          accept="image/*"
           onChange={(e) => setImage(e.target.files[0])}
           className="border border-gray-300 rounded-lg p-2"
         />
+
         <button
           type="submit"
           disabled={loading}
