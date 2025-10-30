@@ -1,46 +1,44 @@
 "use client";
 import { useState } from "react";
-import { db, storage } from "../firebase";
+import { db } from "../firebase";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import UploadImagem from "@/components/UploadImagem"; // componente de upload
 
 export default function TestimonialForm() {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
-  const [image, setImage] = useState(null);
+  const [imageUrls, setImageUrls] = useState([]); // várias imagens
   const [loading, setLoading] = useState(false);
+
+  // adiciona cada nova imagem enviada
+  const handleUploadComplete = (url) => {
+    if (imageUrls.length < 3) {
+      setImageUrls((prev) => [...prev, url]);
+    } else {
+      alert("Você pode enviar no máximo 3 imagens.");
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (loading) return;
     setLoading(true);
 
-    let imageUrl = "";
-
     try {
-      // Faz upload da imagem se houver
-      if (image) {
-        const imageRef = ref(storage, `depoimentos/${Date.now()}_${image.name}`);
-        await uploadBytes(imageRef, image);
-        imageUrl = await getDownloadURL(imageRef);
-      }
-
-      // Envia dados para o Firestore
       await addDoc(collection(db, "depoimentos"), {
         name,
         message,
-        image: imageUrl,
+        images: imageUrls, // salva todas as imagens
         createdAt: Timestamp.now(),
       });
 
-      // Limpa o formulário
       setName("");
       setMessage("");
-      setImage(null);
-
+      setImageUrls([]);
       alert("✅ Depoimento enviado com sucesso!");
     } catch (error) {
       console.error("Erro ao enviar depoimento:", error);
-      alert("❌ Erro ao enviar o depoimento. Tente novamente.");
+      alert("❌ Erro ao enviar o depoimento.");
     } finally {
       setLoading(false);
     }
@@ -73,17 +71,27 @@ export default function TestimonialForm() {
           className="border border-gray-300 rounded-lg p-3 h-32 resize-none focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
 
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => setImage(e.target.files[0])}
-          className="border border-gray-300 rounded-lg p-2"
-        />
+        {/* 👇 Upload de várias imagens */}
+        <UploadImagem onUploadComplete={handleUploadComplete} />
+
+        {/* 👇 Pré-visualização */}
+        {imageUrls.length > 0 && (
+          <div className="flex gap-3 justify-center mt-4">
+            {imageUrls.map((url, idx) => (
+              <img
+                key={idx}
+                src={url}
+                alt={`preview-${idx}`}
+                className="w-24 h-24 object-cover rounded-lg border"
+              />
+            ))}
+          </div>
+        )}
 
         <button
           type="submit"
-          disabled={loading}
-          className="bg-blue-400 text-white px-6 py-3 rounded-full mt-2 hover:bg-blue-500 transition-colors disabled:opacity-50"
+          disabled={loading || !name || !message}
+          className="bg-blue-400 text-white px-6 py-3 rounded-full mt-4 hover:bg-blue-500 transition-colors disabled:opacity-50"
         >
           {loading ? "Enviando..." : "Enviar Depoimento"}
         </button>
