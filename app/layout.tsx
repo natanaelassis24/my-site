@@ -1,5 +1,6 @@
 import "./globals.css";
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -15,9 +16,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="theme-color" content="#ff0000" />
         <link rel="icon" href="/favicon.ico" />
       </head>
-      <body className="bg-gray-50 text-gray-900">
-        <Header /> {/* Aparece em todas as páginas */}
-        <main className="min-h-screen">{children}</main>
+      <body className="bg-gray-50 text-gray-900 flex flex-col min-h-screen">
+        <Header /> {/* aparece 1x em todas as páginas */}
+        <main className="flex-grow">{children}</main>
+        <Footer /> {/* aparece 1x em todas as páginas */}
       </body>
     </html>
   );

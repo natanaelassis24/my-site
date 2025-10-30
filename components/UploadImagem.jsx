@@ -1,6 +1,4 @@
-// components/UploadImagem.jsx
 "use client";
-
 import { UploadButton } from "@uploadthing/react";
 import "@uploadthing/react/styles.css";
 
@@ -10,7 +8,6 @@ export default function UploadImagem({ onUploadComplete }) {
       <UploadButton
         endpoint="imageUploader"
         onClientUploadComplete={(res) => {
-          // res é um array com arquivos enviados; pegamos o primeiro
           const url = res?.[0]?.url;
           if (url && onUploadComplete) onUploadComplete(url);
         }}
