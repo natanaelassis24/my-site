@@ -10,7 +10,7 @@ import {
   doc,
 } from "firebase/firestore";
 import Image from "next/image";
-import { Trash2 } from "lucide-react"; // 👈 Novo ícone moderno de lixeira
+import { Trash2 } from "lucide-react"; // Novo ícone moderno de lixeira
 
 // Tipo do depoimento
 type Testimonial = {
@@ -23,7 +23,7 @@ type Testimonial = {
 export default function Testimonials() {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
 
-  // 🔥 Busca os depoimentos em tempo real
+  // Busca os depoimentos em tempo real
   useEffect(() => {
     const q = query(collection(db, "depoimentos"), orderBy("createdAt", "desc"));
     const unsubscribe = onSnapshot(q, (snapshot) => {
@@ -41,7 +41,7 @@ export default function Testimonials() {
     return () => unsubscribe();
   }, []);
 
-  // 🗑️ Função para excluir um depoimento
+  // Função para excluir um depoimento
   const handleDelete = async (id: string) => {
     if (confirm("Tem certeza que deseja excluir este depoimento?")) {
       await deleteDoc(doc(db, "depoimentos", id));
@@ -102,7 +102,7 @@ export default function Testimonials() {
   );
 }
 
-// 🔁 Carrossel com botões e indicadores
+// Carrossel com botões e indicadores
 function Carousel({ images }: { images: string[] }) {
   const [index, setIndex] = useState(0);
 
