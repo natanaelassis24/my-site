@@ -17,9 +17,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="icon" href="/favicon.ico" />
       </head>
       <body className="bg-gray-50 text-gray-900 flex flex-col min-h-screen">
-        <Header /> {/* aparece 1x em todas as páginas */}
-        <main className="flex-grow">{children}</main>
-        <Footer /> {/* aparece 1x em todas as páginas */}
+        <Header /> {/* Header aparece 1x em todas as páginas */}
+        <main className="flex-grow">
+          {children} {/* Aqui vai o conteúdo da página, incluindo o banner */}
+        </main>
+        <Footer /> {/* Footer fica no final, nunca sobrepondo o banner */}
       </body>
     </html>
   );
